@@ -150,3 +150,21 @@ let hasReached (level:int) (board:Board) =
     board
         |> flatten
         |> Seq.exists (fun tile -> Option.isSome tile && tile.Value >= level)
+
+let hasNoMoves(board:Board) = 
+    let tileCount = 
+        board 
+            |> Array2D.mapi (fun _ _ v -> Option.isSome v)
+            |> flatten
+            |> Seq.filter (fun x -> x)
+            |> Seq.length
+
+    if tileCount < board.Length then
+        false
+    else
+        let up = board = fst (shift Direction.Up board)
+        let down = board = fst (shift Direction.Down board)
+        let left = board = fst (shift Direction.Left board)
+        let right = board = fst (shift Direction.Right board)
+
+        up && down && left && right

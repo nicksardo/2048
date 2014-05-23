@@ -4,9 +4,10 @@ F# 2048
 Fsharp implementation of 2048 for bot testing  
 API  
 ```Fsharp
-newBoard (size:int) (r:System.Random)  
-move (direction:Direction) (board:Board) (r:System.Random) 
-hasReached (level:int) (board:Board)  
+newBoard (size:int) (r:System.Random)  = Board
+move (direction:Direction) (board:Board) (r:System.Random)  = (hasChanged, newBoard, newPoints)
+hasReached (level:int) (board:Board)  = bool
+hasNoMoves(board:Board)  = bool
 ```
 
 
