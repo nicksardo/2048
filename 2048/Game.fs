@@ -6,20 +6,35 @@ type Direction =
     | Left
     | Right
 
-let merge (line:int[]) =
-    seq {
-        let i = ref 0
-        while !i < line.Length do
-            let x = line.[!i]
-            let v = 
-                if !i <> line.Length - 1 && x = line.[!i + 1] then
-                    i := !i + 1
-                    (x * 2, x * 2)
-                else
-                    (x, 0)
-            i := !i + 1
-            yield v
-    }
+let merge (direction:Direction) (line:int[]) =
+    let innerMerge (array:int[]) = 
+        let skip = ref false
+        Array.init array.Length (fun i ->
+            let x = array.[i]
+            if !skip then
+                skip := false
+                Option.None
+            else if i <> array.Length - 1 && x = array.[i+1] then
+                skip := true
+                Option.Some((x * 2, x * 2))
+            else
+                Option.Some((x, 0))
+        )
+                
+    match direction with 
+        | Up | Left ->  
+            line
+            |> innerMerge
+            |> Array.filter Option.isSome
+            |> Array.map Option.get
+
+        | Down | Right -> 
+            line 
+            |> Array.rev
+            |> innerMerge
+            |> Array.rev
+            |> Array.filter Option.isSome
+            |> Array.map Option.get
 
 
 let command (direction:Direction) (board:Option<int>[,]) = 
@@ -40,8 +55,7 @@ let command (direction:Direction) (board:Option<int>[,]) =
             getLine x
             |> Array.filter Option.isSome 
             |> Array.map Option.get
-            |> merge
-            |> Seq.toArray
+            |> merge direction
 
         let line = Array.map (fun (l, _) -> l) lineResults
         let newPoints = Array.sumBy (fun (_, points) -> points) lineResults
