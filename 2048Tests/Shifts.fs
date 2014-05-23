@@ -8,8 +8,8 @@ open FsUnit
 [<TestFixture>]
 type ShiftTests() =
     let testShift board direction expected expectedPoints =
-        let (newBoard, points) = shift direction (to2d board)
-        newBoard |> should equal (to2d expected)
+        let (newBoard, points) = shift direction (to2D board)
+        newBoard |> should equal (to2D expected)
         points |> should equal expectedPoints
 
     [<Test>]
