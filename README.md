@@ -1,8 +1,16 @@
 F# 2048
 ====
 
-Fsharp implementation of 2048 for bot testing
+Fsharp implementation of 2048 for bot testing  
+API  
+```Fsharp
+newBoard (size:int) (r:System.Random)  
+move (direction:Direction) (board:Board) (r:System.Random) 
+hasReached (level:int) (board:Board)  
+```
 
+
+Example:  
 ```Fsharp
 let r = new System.Random(2048)
 
