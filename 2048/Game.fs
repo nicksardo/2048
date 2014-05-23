@@ -94,22 +94,24 @@ let newTileValue (r:System.Random) =
 
 let move (direction:Direction) (board:Option<int>[,]) (r:System.Random) =
     let (shiftedBoard, newPoints) = shift direction board
+    let hasChanged = board <> shiftedBoard
 
-    let empties =
-        shiftedBoard
-        |> Array2D.mapi (fun row col v ->
-                (row, col, v)
-            )
-        |> flatten
-        |> Seq.filter (fun (_, _, v) -> Option.isNone v)
-        |> Seq.map (fun (r, c, _) -> (r, c))
+    if hasChanged then
+        let empties =
+            shiftedBoard
+            |> Array2D.mapi (fun row col v ->
+                    (row, col, v)
+                )
+            |> flatten
+            |> Seq.filter (fun (_, _, v) -> Option.isNone v)
+            |> Seq.map (fun (r, c, _) -> (r, c))
 
-    let chosenTile = r.Next(Seq.length empties)
-    let (row, col) = Seq.nth chosenTile empties
+        let chosenTile = r.Next(Seq.length empties)
+        let (row, col) = Seq.nth chosenTile empties
 
-    Array2D.set shiftedBoard row col (newTileValue r)
+        Array2D.set shiftedBoard row col (newTileValue r)
 
-    (shiftedBoard, newPoints)
+    (hasChanged, shiftedBoard, newPoints)
 
 
 let shuffle (r:System.Random) (array:'a[]) = 
