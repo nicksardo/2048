@@ -84,7 +84,7 @@ let shift (direction:Direction) (board:Option<int>[,]) =
 
     (newBoard, newPoints)
 
-let newTile (r:System.Random) = 
+let newTileValue (r:System.Random) = 
         let v = 
             if r.NextDouble() < 0.9 then
                 2
@@ -107,6 +107,38 @@ let move (direction:Direction) (board:Option<int>[,]) (r:System.Random) =
     let chosenTile = r.Next(Seq.length empties)
     let (row, col) = Seq.nth chosenTile empties
 
-    Array2D.set shiftedBoard row col (newTile r)
+    Array2D.set shiftedBoard row col (newTileValue r)
 
     (shiftedBoard, newPoints)
+
+
+let shuffle (r:System.Random) (array:'a[]) = 
+    let n = array.Length
+    for x in 1..n do
+        let i = n-x
+        let j = r.Next(i+1)
+        let tmp = array.[i]
+        array.[i] <- array.[j]
+        array.[j] <- tmp
+    array
+
+let newBoard (size:int) (r:System.Random) =
+    if size <= 1 then
+        raise (System.ArgumentException("Size must be greater than 1"))
+
+    let board = Array2D.create size size Option.None
+    let locs = 
+        board 
+            |> Array2D.mapi (fun row col v ->
+                    (row, col)
+                )
+            |> flatten
+            |> Seq.toArray
+            |> shuffle r
+
+    let (aRow, aCol) = Array.get locs 0
+    let (bRow, bCol) = Array.get locs 1
+
+    Array2D.set board aRow aCol (newTileValue r)
+    Array2D.set board bRow bCol (newTileValue r)
+    board
