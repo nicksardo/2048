@@ -1,29 +1,19 @@
-﻿module TwentyFortyEightTests
+﻿module TwentyFortyEightTests.Shifts
 
 open TwentyFortyEight
+open Helpers
 open NUnit.Framework
 open FsUnit
 
-
 [<TestFixture>]
-type MovementTests() =
-    let n = 
-        Option.None
-
-    let s (i:int) =
-        Option.Some(i)
-
-    let to2d (board:Option<int>[][]) =
-        let l = Array.length board
-        Array2D.init l l (fun row col -> board.[row].[col])
-
-    let testMovement board direction expected expectedPoints =
-        let (newBoard, points) = command direction (to2d board)
+type ShiftTests() =
+    let testShift board direction expected expectedPoints =
+        let (newBoard, points) = shift direction (to2d board)
         newBoard |> should equal (to2d expected)
         points |> should equal expectedPoints
 
     [<Test>]
-    member test.``Move Up``() =
+    member test.``Shift Up``() =
         let d = Direction.Up
         let board = [| 
                         [| n; s 2; n; n; |]; 
@@ -37,7 +27,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -51,7 +41,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -65,7 +55,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; s 16; n; n; |]; 
@@ -79,10 +69,10 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 32
+        testShift board d expected 32
 
     [<Test>]
-    member test.``Move Left``() =
+    member test.``Shift Left``() =
         let d = Direction.Left
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -96,7 +86,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -110,7 +100,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -124,7 +114,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -138,10 +128,10 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 8
+        testShift board d expected 8
         
     [<Test>]
-    member test.``Move Right``() =
+    member test.``Shift Right``() =
         let d = Direction.Right
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -155,7 +145,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -169,7 +159,7 @@ type MovementTests() =
                         [| n; n; n; s 256; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -183,7 +173,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -197,10 +187,10 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-        testMovement board d expected 1024
+        testShift board d expected 1024
        
     [<Test>]
-    member test.``Move Down``() =
+    member test.``Shift Down``() =
         let d = Direction.Down
         let board = [| 
                         [| n; s 1024; n; n; |]; 
@@ -214,7 +204,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; s 1024; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board = [| 
                         [| n; n; n; n; |]; 
@@ -228,7 +218,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; s 256; n; n; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -242,7 +232,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; s 4; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; n; n; n; |]; 
@@ -256,7 +246,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; s 512; n; s 512; |]; 
                         |]
-        testMovement board d expected 0
+        testShift board d expected 0
 
         let board=[| 
                         [| n; s 512; n; n; |]; 
@@ -270,12 +260,11 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; s 1024; n; n; |]; 
                         |]
-        testMovement board d expected 1024
+        testShift board d expected 1024
        
 
     [<Test>]
     member test.``Complex Boards``() =
-        let d = Direction.Down
         let board = [| 
                         [| s 4; s 16; s 4; s 128; |]; 
                         [| s 4; s 16; s 64; s 2; |]; 
@@ -288,6 +277,13 @@ type MovementTests() =
                         [| s 8; s 32; s 64; s 128; |]; 
                         [| s 2; s 8; s 2; s 2; |]; 
                         |]
-        testMovement board d expected 40
+        testShift board Direction.Down expected 40
 
-
+        let board = expected
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 8; |]; 
+                        [| s 8; s 32; s 64; s 128; |]; 
+                        [| n; s 2; s 8; s 4; |]; 
+                        |]
+        testShift board Direction.Right expected 12

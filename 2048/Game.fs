@@ -6,6 +6,8 @@ type Direction =
     | Left
     | Right
 
+let flatten (A:'a[,]) = A |> Seq.cast<'a>
+
 let merge (direction:Direction) (line:int[]) =
     let innerMerge (array:int[]) = 
         let skip = ref false
@@ -37,8 +39,8 @@ let merge (direction:Direction) (line:int[]) =
             |> Array.map Option.get
 
 
-let command (direction:Direction) (board:Option<int>[,]) = 
-    let l = int(System.Math.Sqrt(float(board.Length)))
+let shift (direction:Direction) (board:Option<int>[,]) = 
+    let l = Array2D.length1 board
 
     let getLine = 
         match direction with 
@@ -81,3 +83,30 @@ let command (direction:Direction) (board:Option<int>[,]) =
     let newBoard = Array2D.init l l getValue
 
     (newBoard, newPoints)
+
+let newTile (r:System.Random) = 
+        let v = 
+            if r.NextDouble() < 0.9 then
+                2
+            else 
+                4
+        Option.Some(v)
+
+let move (direction:Direction) (board:Option<int>[,]) (r:System.Random) =
+    let (shiftedBoard, newPoints) = shift direction board
+
+    let empties =
+        shiftedBoard
+        |> Array2D.mapi (fun row col v ->
+                (row, col, v)
+            )
+        |> flatten
+        |> Seq.filter (fun (_, _, v) -> Option.isNone v)
+        |> Seq.map (fun (r, c, _) -> (r, c))
+
+    let chosenTile = r.Next(Seq.length empties)
+    let (row, col) = Seq.nth chosenTile empties
+
+    Array2D.set shiftedBoard row col (newTile r)
+
+    (shiftedBoard, newPoints)

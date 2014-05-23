@@ -50,9 +50,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Movements.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
+    <Compile Include="Helpers.fs" />
+    <Compile Include="Shifts.fs" />
+    <Compile Include="Moves.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2048\2048.fsproj">
