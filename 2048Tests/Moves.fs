@@ -23,7 +23,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-                       |> to2D
+                       |> toBoard
 
         testMove board Direction.Up board 0 false r
 
@@ -33,7 +33,7 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         [| n; n; n; n; |]; 
                         |]
-                       |> to2D
+                       |> toBoard
 
         let expected = Array2D.copy board
         Array2D.set expected 0 1 (s 2)
@@ -47,7 +47,7 @@ type MovementTests() =
                         [| n; s 1024; n; n; |]; 
                         [| n; n; s 512; n; |]; 
                         |]
-                       |> to2D
+                       |> toBoard
 
         let expected = Array2D.copy board
         Array2D.set expected 1 1 n

@@ -7,6 +7,7 @@ type Direction =
     | Right
 
 let flatten (A:'a[,]) = A |> Seq.cast<'a>
+type Board = Option<int>[,]
 
 let merge (direction:Direction) (line:int[]) =
     let innerMerge (array:int[]) = 
@@ -39,7 +40,7 @@ let merge (direction:Direction) (line:int[]) =
             |> Array.map Option.get
 
 
-let shift (direction:Direction) (board:Option<int>[,]) = 
+let shift (direction:Direction) (board:Board) = 
     let l = Array2D.length1 board
 
     let getLine = 
@@ -92,7 +93,7 @@ let newTileValue (r:System.Random) =
                 4
         Option.Some(v)
 
-let move (direction:Direction) (board:Option<int>[,]) (r:System.Random) =
+let move (direction:Direction) (board:Board) (r:System.Random) =
     let (shiftedBoard, newPoints) = shift direction board
     let hasChanged = board <> shiftedBoard
 
@@ -144,3 +145,8 @@ let newBoard (size:int) (r:System.Random) =
     Array2D.set board aRow aCol (newTileValue r)
     Array2D.set board bRow bCol (newTileValue r)
     board
+
+let hasWon (board:Board) = 
+    board
+        |> flatten
+        |> Seq.exists (fun tile -> Option.isSome tile && tile.Value >= 2048)
