@@ -272,3 +272,22 @@ type MovementTests() =
                         |]
         testMovement board d expected 1024
        
+
+    [<Test>]
+    member test.``Complex Boards``() =
+        let d = Direction.Down
+        let board = [| 
+                        [| s 4; s 16; s 64; s 128; |]; 
+                        [| s 4; s 16; s 2; s 2; |]; 
+                        [| s 4; s 8; n; n; |]; 
+                        [| s 2; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| s 4; n; s 4; n; |]; 
+                        [| s 8; s 32; s 64; s 128; |]; 
+                        [| s 2; s 8; s 2; s 2; |]; 
+                        |]
+        testMovement board d expected 0
+
+
