@@ -139,5 +139,136 @@ type MovementTests() =
                         [| n; n; n; n; |]; 
                         |]
         testMovement board d expected 8
+        
+    [<Test>]
+    member test.``Move Right``() =
+        let d = Direction.Right
+        let board = [| 
+                        [| n; n; n; n; |]; 
+                        [| s 512; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 512; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board = [| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 256; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 256; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 4; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 4; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; s 512; n; s 512; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 1024; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        testMovement board d expected 1024
        
+    [<Test>]
+    member test.``Move Down``() =
+        let d = Direction.Down
+        let board = [| 
+                        [| n; s 1024; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 1024; n; n; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board = [| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 256; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 256; n; n; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 4; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; s 4; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; s 512; n; s 512; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 512; n; s 512; |]; 
+                        |]
+        testMovement board d expected 0
+
+        let board=[| 
+                        [| n; s 512; n; n; |]; 
+                        [| n; s 512; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        |]
+        let expected=[| 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; n; n; n; |]; 
+                        [| n; s 1024; n; n; |]; 
+                        |]
+        testMovement board d expected 1024
        
