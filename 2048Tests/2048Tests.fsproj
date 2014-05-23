@@ -50,8 +50,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library1.fs" />
-    <None Include="Script.fsx" />
+    <Compile Include="GameTests.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
   </ItemGroup>
