@@ -146,7 +146,7 @@ let newBoard (size:int) (r:System.Random) =
     Array2D.set board bRow bCol (newTileValue r)
     board
 
-let hasWon (board:Board) = 
+let hasReached (level:int) (board:Board) = 
     board
         |> flatten
-        |> Seq.exists (fun tile -> Option.isSome tile && tile.Value >= 2048)
+        |> Seq.exists (fun tile -> Option.isSome tile && tile.Value >= level)

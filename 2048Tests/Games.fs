@@ -18,7 +18,7 @@ type GameTests() =
 
         board
             |> toBoard
-            |> hasWon
+            |> hasReached 2048
             |> should equal true
 
         let board = [| 
@@ -30,5 +30,5 @@ type GameTests() =
 
         board
             |> toBoard
-            |> hasWon
+            |> hasReached 2048
             |> should equal false
