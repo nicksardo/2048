@@ -1,4 +1,4 @@
-2048
+F# 2048
 ====
 
-F# implementation of 2048 for bot testing
+Fsharp implementation of 2048 for bot testing
