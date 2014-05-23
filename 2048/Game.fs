@@ -8,12 +8,17 @@ type Direction =
 
 let merge (line:int[]) =
     seq {
-        for i in 0 .. line.Length - 1 do
-            let x = line.[i]
-            if i <> line.Length - 1 && x = line.[i+1] then
-                yield (x * 2, x * 2)
-            else
-                yield (x, 0)
+        let i = ref 0
+        while !i < line.Length do
+            let x = line.[!i]
+            let v = 
+                if !i <> line.Length - 1 && x = line.[!i + 1] then
+                    i := !i + 1
+                    (x * 2, x * 2)
+                else
+                    (x, 0)
+            i := !i + 1
+            yield v
     }
 
 
